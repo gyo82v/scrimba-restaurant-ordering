@@ -5,6 +5,7 @@ import headerImg from "./images/bg.png"
 import Item from "./components/Item"
 import Order from "./components/Order.jsx"
 import Form from "./components/Form.jsx"
+import OrderCompleted from "./components/OrderCompleted.jsx"
 
 function App() {
   const [cart, setCart] = useState([])
@@ -14,12 +15,9 @@ function App() {
   const [isOrderCompleted, setIsOrderCompleted] = useState(false)
 
   //tailwind styles
-  const container = `${isFormVisible && "bg-gradient-to-b from-neutral-500 via-neutral-300 to-neutral-500"} h-screen`
+  const container = `${isFormVisible && "bg-gradient-to-b from-neutral-500 via-neutral-300 to-neutral-500"} h-screen `
   const header = `bg-cover bg-center p-8 text-neutral-300`
-  const title = `text-2xl`
-  const description = ``
-  const main = `p-4 flex flex-col`
-  const itemsSection = `flex flex-col gap-5 mt-4`
+  const main = `p-4 flex flex-col md:w-[700px] md:mx-auto`
   //
 
   const addItemTocart = (name, price) => {
@@ -35,26 +33,29 @@ function App() {
   }
   const handleForm = () => (setIsFormVisible(f => !f))
   const handleIsOrderCompleted = () => {
-    setIsOrderCompleted(o => !o)
+    setIsOrderCompleted(true)
     setIsFormVisible(f => !f)
     setCart([])
     setTotal(0)
     setFormdata({name : "", cardNumber : "", cvv : ""})
   }
+  const handleNewOrder = () => setIsOrderCompleted(false) 
 
   const itemsArray = menuArray.map(i => (
-    <Item data={i} key={i.id} addItem={addItemTocart} />
+    <Item data={i} key={i.id} addItem={addItemTocart} isCompleted={isOrderCompleted} />
   ))
+
+  console.log(isOrderCompleted)
 
 
   return (
    <div className={container}>
     <header className={header} style={{backgroundImage: `url(${headerImg})`}}>
-      <h1 className={title}>Gyos's diner</h1>
-      <p className={description}>The best burgers and pizzas in town.</p>
+      <h1 className="text-2xl">Gyos's diner</h1>
+      <p>The best burgers and pizzas in town.</p>
     </header>
     <main className={main}>
-      <section className={itemsSection}>
+      <section className="flex flex-col gap-5 mt-4">
         {itemsArray}
       </section>
       {cart.length > 0 && 
@@ -67,7 +68,7 @@ function App() {
         />
       }
       {isFormVisible && <Form data={formData} handleChange={handleChange} completed={handleIsOrderCompleted} /> }
-      {isOrderCompleted && <div><h1>Order completed</h1></div>}
+      {isOrderCompleted && <OrderCompleted newOrder={handleNewOrder} />}
     </main>
    </div>
   )
