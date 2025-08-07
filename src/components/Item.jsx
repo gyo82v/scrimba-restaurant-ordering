@@ -1,7 +1,7 @@
 import { HiPlus } from "react-icons/hi";
 
 
-export default function Item({data}){
+export default function Item({data, addItem}){
     const {name, price, ingredients, emoji} = data
     //tailwind styles
     const container = `flex items-center border-b border-neutral-300 pb-8`
@@ -25,7 +25,7 @@ export default function Item({data}){
                     <p className={prc}>£{price}</p>
                 </div>
             </section>
-            <button className={btn} aria-label="add to cart"><HiPlus className={icon} /></button>
+            <button className={btn} aria-label="add to cart" onClick={() => addItem(name, price)}><HiPlus className={icon} /></button>
         </section>
     )
 }
