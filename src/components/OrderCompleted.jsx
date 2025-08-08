@@ -5,7 +5,7 @@ export default function OrderCompleted({newOrder}){
 
     return(
         <section className={container}>
-            <h4 className="text-xl font-semibold mb-4">Thank you sir! Your order is on his way!</h4>
+            <h3 className="text-xl font-semibold mb-4">Thank you sir! Your order is on his way!</h3>
             <p><span className={span} onClick={newOrder}>Click here</span> to order again!</p>
         </section>
     )
